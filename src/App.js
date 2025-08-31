@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import ToDoInput from "./components/TodoInput";
 import ToDoList from "./components/TodoList";
@@ -7,6 +7,17 @@ import { completeTask, onInputChange } from "./components/Handle";
 
 function App() {
   const [todoData, setTodos] = useState(todos);
+
+  const fetchAPI = () => {
+    fetch("http://localhost:3001/todos")
+      .then((res) => res.json())
+      .then((data) => setTodos(data));
+  };
+
+  useEffect(() => {
+    fetchAPI();
+  }, []);
+
   return (
     <>
       <Header />
